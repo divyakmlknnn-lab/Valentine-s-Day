@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine 💙</title>
+
+  <style>
+    :root{
+      --bg1:#e8f6ff;
+      --bg2:#d9f0ff;
+      --bg3:#c6e6ff;
+
+      --ink:#0b2240;
+      --muted:rgba(11,34,64,.72);
+
+      --glass: rgba(255,255,255,.58);
+      --stroke: rgba(255,255,255,.90);
+      --shadow: 0 22px 70px rgba(32,88,140,.18);
+      --glow: 0 0 34px rgba(120,190,255,.50);
+
+      --r: 28px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      color:var(--ink);
+      overflow-x:hidden;
+      background:
+        radial-gradient(900px 600px at 18% 18%, rgba(255,255,255,.70), transparent 60%),
+        radial-gradient(850px 550px at 82% 22%, rgba(160,220,255,.55), transparent 55%),
+        radial-gradient(900px 650px at 50% 88%, rgba(195,175,255,.30), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+    }
+
+    /* soft animated blobs */
+    .blob{
+      position:fixed;
+      width:520px; height:520px;
+      filter: blur(46px);
+      opacity:.60;
+      border-radius: 45% 55% 55% 45% / 55% 45% 55% 45%;
+      animation: float 14s ease-in-out infinite;
+      pointer-events:none;
+      z-index:-3;
+      mix-blend-mode: multiply;
+    }
+    .b1{ left:-180px; top:-220px; background: radial-gradient(circle at 30% 30%, rgba(120,190,255,.95), transparent 62%); }
+    .b2{ right:-220px; top:20px; background: radial-gradient(circle at 70% 30%, rgba(170,240,255,.95), transparent 62%); animation-delay:-5s; }
+    .b3{ left:30%; bottom:-300px; background: radial-gradient(circle at 30% 70%, rgba(195,175,255,.85), transparent 62%); animation-delay:-9s; }
+    @keyframes float{
+      0%,100%{ transform: translate(0,0) rotate(0deg) scale(1); }
+      50%{ transform: translate(60px, -26px) rotate(10deg) scale(1.06); }
+    }
+
+    /* floating hearts/sparkles */
+    .floaty{
+      position:fixed;
+      bottom:-30px;
+      font-size: 18px;
+      opacity:.95;
+      pointer-events:none;
+      animation: rise linear forwards;
+      z-index:-2;
+      filter: drop-shadow(0 0 10px rgba(90,150,220,.35));
+    }
+    @keyframes rise{
+      from{ transform: translateY(0) translateX(0) rotate(0deg); opacity:1; }
+      to  { transform: translateY(-120vh) translateX(40px) rotate(18deg); opacity:0; }
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding: 22px 14px 56px;
+    }
+
+    /* header pill */
+    .topbar{
+      width:min(980px, 100%);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.60);
+      border: 1px solid rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 40px rgba(32,88,140,.10);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width:0;
+    }
+    .logo{
+      width:42px; height:42px;
+      border-radius:16px;
+      display:grid; place-items:center;
+      background: linear-gradient(145deg, rgba(255,255,255,.92), rgba(255,255,255,.50));
+      border: 1px solid rgba(255,255,255,.95);
+      box-shadow: var(--glow);
+      flex: 0 0 auto;
+    }
+    .brand .txt{min-width:0}
+    .brand h1{ margin:0; font-size:16px; font-weight:950; letter-spacing:.2px; }
+    .brand p{ margin:2px 0 0; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .chip{
+      font-size:12px;
+      color:rgba(11,34,64,.78);
+      padding: 10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.92);
+      background: rgba(255,255,255,.48);
+      white-space:nowrap;
+    }
+
+    /* main card */
+    .card{
+      width:min(980px, 100%);
+      margin-top: 14px;
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(255,255,255,.44));
+      border: 1px solid rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow:hidden;
+      position:relative;
+    }
+    .sprinkle{
+      position:absolute;
+      inset:-90px -90px auto auto;
+      width:240px; height:240px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,0) 70%);
+      transform: rotate(18deg);
+      opacity:.95;
+      pointer-events:none;
+    }
+
+    .content{
+      padding: 26px 18px 18px;
+      display:grid;
+      gap: 16px;
+    }
+
+    .hero{
+      text-align:center;
+      padding: 6px 10px 0;
+      display:grid;
+      gap: 10px;
+    }
+    .hero h2{
+      margin:0;
+      font-size: clamp(26px, 4vw, 44px);
+      line-height:1.05;
+      letter-spacing:.2px;
+    }
+    .hero .sub{
+      margin: 0 auto;
+      max-width: 56ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height:1.65;
+    }
+
+    .btnRow{
+      display:flex;
+      justify-content:center;
+      gap: 12px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+      position:relative;
+      min-height: 56px;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 950;
+      letter-spacing:.2px;
+      transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+      user-select:none;
+    }
+    button:hover{ transform: translateY(-2px); }
+    button:active{ transform: translateY(1px) scale(.98); }
+
+    .yes{
+      background: linear-gradient(135deg, #9be6ff, #5aaeff);
+      color:#0a2544;
+      box-shadow: 0 18px 50px rgba(90,170,255,.25);
+    }
+    .no{
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.92);
+      color: rgba(11,34,64,.92);
+      box-shadow: 0 18px 50px rgba(0,0,0,.05);
+      position: relative;
+    }
+    .ghost{
+      background: rgba(255,255,255,.48);
+      border: 1px solid rgba(255,255,255,.92);
+      color: rgba(11,34,64,.92);
+    }
+
+    .status{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      color: rgba(11,34,64,.72);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background:#5aaeff;
+      box-shadow: 0 0 18px rgba(90,174,255,.55);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse{ 0%,100%{transform:scale(1); opacity:.80;} 50%{transform:scale(1.35); opacity:1;} }
+
+    /* Meme sticker — hidden until NO */
+    .memeSticker{
+      border-radius: 24px;
+      border: 1px dashed rgba(90,160,230,.35);
+      background: rgba(255,255,255,.48);
+      padding: 14px;
+      display:grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .memeTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .memeTop .label{ font-weight: 950; }
+    .memeTop .hint{ color: rgba(11,34,64,.65); font-size: 12px; margin-top: 2px; }
+
+    .meme{
+      overflow:hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(90,160,230,.25);
+      position:relative;
+      background: rgba(255,255,255,.62);
+    }
+    .meme img{
+      width:100%;
+      height: 320px;
+      object-fit: cover;
+      display:block;
+    }
+    .cap{
+      position:absolute;
+      left:12px; right:12px; bottom:10px;
+      background: rgba(255,255,255,.76);
+      border: 1px solid rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: rgba(11,34,64,.94);
+      backdrop-filter: blur(10px);
+    }
+
+    /* YES gifts area */
+    .yesArea{
+      border-top: 1px solid rgba(255,255,255,.78);
+      background: radial-gradient(900px 340px at 50% 0%, rgba(120,190,255,.22), transparent 65%);
+      padding: 20px 18px 26px;
+      display:grid;
+      gap: 14px;
+    }
+    .yesHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .yesHead h3{ margin:0; font-size: 24px; font-weight: 1000; }
+    .yesHead p{ margin:6px 0 0; color: rgba(11,34,64,.72); line-height:1.55; }
+
+    .gifts{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px){ .gifts{ grid-template-columns: 1fr; } }
+
+    .gift{
+      border-radius: 24px;
+      background: rgba(255,255,255,.54);
+      border: 1px solid rgba(255,255,255,.92);
+      padding: 16px;
+      box-shadow: 0 18px 40px rgba(32,88,140,.08);
+      transition: transform .12s ease, background .12s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .gift:hover{ transform: translateY(-3px); background: rgba(255,255,255,.62); }
+
+    .gift .icon{
+      width:50px; height:50px;
+      border-radius: 18px;
+      display:grid; place-items:center;
+      background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(255,255,255,.52));
+      border: 1px solid rgba(255,255,255,.96);
+      box-shadow: var(--glow);
+      font-size: 22px;
+    }
+    .gift h4{ margin:10px 0 6px; font-size:16px; font-weight:950; }
+    .gift p{ margin:0; color: rgba(11,34,64,.72); font-size:13px; line-height:1.55; }
+    .actions{ margin-top:10px; display:flex; flex-wrap:wrap; gap:10px; }
+
+    .hidden{ display:none !important; }
+
+    /* modal */
+    .modalOverlay{
+      position:fixed; inset:0;
+      background: rgba(10,25,45,.32);
+      backdrop-filter: blur(10px);
+      display:grid;
+      place-items:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modal{
+      width:min(860px, 100%);
+      border-radius: 24px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(255,255,255,.96);
+      box-shadow: 0 30px 90px rgba(32,88,140,.18);
+      overflow:hidden;
+      color: rgba(11,34,64,.94);
+    }
+    .modalHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.92);
+    }
+    .modalHeader h5{ margin:0; font-size: 16px; font-weight: 1000; }
+    .modalBody{ padding: 14px 16px 18px; line-height: 1.75; font-size: 14px; white-space: pre-wrap; }
+    .closeBtn{
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.96);
+      color: rgba(11,34,64,.94);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 950;
+    }
+
+    /* confetti canvas */
+    #confetti{ position:fixed; inset:0; pointer-events:none; z-index: 40; }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <canvas id="confetti" class="hidden"></canvas>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">💙</div>
+        <div class="txt">
+          <h1>Valentine Portal</h1>
+          <p>made with love + chaos + 0 shame</p>
+        </div>
+      </div>
+      <div class="chip" id="dateChip"></div>
+    </div>
+
+    <main class="card">
+      <div class="sprinkle"></div>
+
+      <div class="content">
+        <section class="hero">
+          <h2 id="mainQ">Hey chicken, will you be my Valentine?</h2>
+          <p class="sub" id="subQ">Choose wisely. I’m emotionally attached to the correct answer. 😌</p>
+
+          <div class="btnRow" id="questionBtns">
+            <button class="yes" id="yesBtn">YES 💙</button>
+            <button class="no" id="noBtn">NO 🙃</button>
+          </div>
+
+          <div class="btnRow hidden" id="tryAgainBtns">
+            <button class="yes" id="tryAgainBtn">Try again 😏</button>
+            <button class="ghost" id="backBtn">Back</button>
+          </div>
+
+          <div class="status">
+            <div class="dot"></div>
+            <div><span id="statusText">Waiting for husband’s decision…</span></div>
+          </div>
+
+          <!-- MEMES: hidden until NO -->
+          <div class="memeSticker hidden" id="memeSticker">
+            <div class="memeTop">
+              <div>
+                <div class="label">Friends Judge Panel</div>
+                <div class="hint">This only appears when you choose violence (aka NO).</div>
+              </div>
+              <button class="ghost" id="shuffleMemeBtn" style="padding:10px 12px;">Another roast</button>
+            </div>
+
+            <div class="meme">
+              <img id="memeImg" alt="Friends meme" />
+              <div class="cap" id="memeCaption"></div>
+            </div>
+          </div>
+
+        </section>
+      </div>
+
+      <!-- YES area -->
+      <section class="yesArea hidden" id="yesScreen">
+        <div class="yesHead">
+          <div>
+            <h3>OKAYYY YESSS 💙💙💙</h3>
+            <p>Unlocked: gifts + kisses + unlimited cuddles. Come here. 😌</p>
+          </div>
+          <button class="ghost" id="restartBtn">Restart ↻</button>
+        </div>
+
+        <div class="gifts">
+          <div class="gift">
+            <div class="icon">🌹</div>
+            <h4>Rose Bouquet + Love Notes</h4>
+            <p>Open for: sweet words + “I’d pick you in every universe” energy.</p>
+            <div class="actions">
+              <button class="yes" id="openLetterBtn">Words from my heart 💌</button>
+              <button class="ghost" id="openQuotesBtn">Tiny notes ✨</button>
+            </div>
+          </div>
+
+          <div class="gift">
+            <div class="icon">🎵</div>
+            <h4>QR Code: “Un Vizhigalil”</h4>
+            <p>Scan and play our vibe. (Phone-friendly)</p>
+            <div class="actions">
+              <button class="yes" id="openQrBtn">Show QR 📱</button>
+              <button class="ghost" id="openSongBtn">Open song ↗</button>
+            </div>
+          </div>
+
+          <div class="gift">
+            <div class="icon">🎟️</div>
+            <h4>Memory Ticket</h4>
+            <p>A cute coupon: snacks + movie + cuddles + unfair hug tax.</p>
+            <div class="actions">
+              <button class="yes" id="openTicketBtn">Redeem 🎟️</button>
+              <button class="ghost" id="openPlanBtn">Pick our date 🗓️</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modalOverlay hidden" id="modalOverlay">
+    <div class="modal">
+      <div class="modalHeader">
+        <h5 id="modalTitle">Title</h5>
+        <button class="closeBtn" id="closeModalBtn">Close</button>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // ====== Customize ======
+    const HUSBAND_NAME = "Praveen";
+    const YOUR_NAME = "Divya";
+    const SONG_URL = "https://www.youtube.com/watch?v=Zi5sLiLlXCk";
+
+    /*
+      MEME MATCH GUARANTEE:
+      Each item is a single paired object (gif + caption).
+      We NEVER set caption separately anymore.
+    */
+    const FRIENDS_MEMES = [
+  {
+    img: "https://media.giphy.com/media/Z9Qco2BPISQMzkXpxl/giphy.gif"
+  },
+  {
+    img: "https://media.giphy.com/media/WT8pzD8MgX2cPgzejY/giphy.gif",
+  },
+  {
+    img: "https://media.giphy.com/media/f5voQIM2GP1tkAT8J6/giphy.gif",
+  }
+];
+
+
+    const LOVE_LETTER =
+`To the love of my life
+
+You are the calm in my chest and the spark in my imagination.
+You make ordinary days feel softer, brighter… worth remembering.
+
+Every time I look at you, I’m hit with that quiet, unbelievable feeling:
+“I get to love this person. I get to be loved by him.”
+And it still doesn’t make sense to me in the best way.
+
+I admire you not just for how you look (even though… wow those biceps?),
+but for who you are when no one’s watching.
+Your passion. Your ambition. Your quiet love. The way you show up.
+The way you make me feel safe enough to dream bigger.
+
+Sometimes I think about younger me the kid-version of my heart
+and I want to thank her for recognizing something beautiful back then.
+Because now I see everything.
+And choosing you has been the best decision my life has ever made.
+
+I don’t want a life where you’re not in it.
+I don’t even want to imagine it.
+I want *this* life, with you, again and again and again,
+in every timeline, in every universe, for as long as time allows.
+
+Happy Valentine’s Day, ${HUSBAND_NAME}.
+I love you more than words can carry.
+
+— ${YOUR_NAME} 💙`;
+
+    const ROSE_NOTES = [
+      "If I had a rose for every time I thought of you, I’d be walking in a garden forever. 🌹",
+      "I choose you — in the loud days and the quiet ones. Always.",
+      "You’re my favorite place to rest.",
+      "I love you in the tiniest moments — and in the biggest ones.",
+      "If love had a face, it would look like you smiling at me.",
+      "You make my heart feel like it’s home."
+    ];
+
+    // ====== Elements ======
+    const dateChip = document.getElementById("dateChip");
+    const mainQ = document.getElementById("mainQ");
+    const subQ = document.getElementById("subQ");
+    const statusText = document.getElementById("statusText");
+
+    const questionBtns = document.getElementById("questionBtns");
+    const tryAgainBtns = document.getElementById("tryAgainBtns");
+    const yesScreen = document.getElementById("yesScreen");
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const tryAgainBtn = document.getElementById("tryAgainBtn");
+    const backBtn = document.getElementById("backBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    const memeSticker = document.getElementById("memeSticker");
+    const memeImg = document.getElementById("memeImg");
+    const memeCaption = document.getElementById("memeCaption");
+    const shuffleMemeBtn = document.getElementById("shuffleMemeBtn");
+
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+
+    const openLetterBtn = document.getElementById("openLetterBtn");
+    const openQuotesBtn = document.getElementById("openQuotesBtn");
+    const openQrBtn = document.getElementById("openQrBtn");
+    const openSongBtn = document.getElementById("openSongBtn");
+    const openTicketBtn = document.getElementById("openTicketBtn");
+    const openPlanBtn = document.getElementById("openPlanBtn");
+
+    // Confetti
+    const confettiCanvas = document.getElementById("confetti");
+    const ctx = confettiCanvas.getContext("2d");
+    let confetti = [];
+    let confettiTimer = null;
+
+    // Floating hearts/sparkles
+    const FLOATIES = ["💙","✨","💙","💫","🫧"];
+    function spawnFloaty(burst=false){
+      const el = document.createElement("div");
+      el.className = "floaty";
+      el.textContent = FLOATIES[Math.floor(Math.random()*FLOATIES.length)];
+      el.style.left = Math.random()*100 + "vw";
+      el.style.fontSize = (burst ? (18 + Math.random()*18) : (14 + Math.random()*10)) + "px";
+      el.style.animationDuration = (burst ? (2.8 + Math.random()*1.6) : (6 + Math.random()*4)) + "s";
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 9000);
+    }
+    setInterval(()=>spawnFloaty(false), 620);
+    function floatyBurst(){ for(let i=0;i<26;i++) spawnFloaty(true); }
+
+    function setTodayChip(){
+      const d = new Date();
+      const opts = { weekday:"short", month:"short", day:"numeric" };
+      dateChip.textContent = `Today: ${d.toLocaleDateString(undefined, opts)} 💙`;
+    }
+
+    // Always set GIF + caption together
+    let lastMemeIndex = -1;
+    function pickMeme(){
+      let i = Math.floor(Math.random()*FRIENDS_MEMES.length);
+      if(FRIENDS_MEMES.length > 1){
+        while(i === lastMemeIndex) i = Math.floor(Math.random()*FRIENDS_MEMES.length);
+      }
+      lastMemeIndex = i;
+      const m = FRIENDS_MEMES[i];
+
+      memeImg.src = m.img;
+      memeCaption.textContent = m.caption;
+    }
+
+    function showTryAgain(){
+      questionBtns.classList.add("hidden");
+      tryAgainBtns.classList.remove("hidden");
+
+      // show meme panel ONLY now
+      memeSticker.classList.remove("hidden");
+
+      statusText.textContent = "NO detected. System requests a better answer.";
+      subQ.textContent = "Try again, chicken. I’m giving you one more chance. 😌";
+    }
+
+    function hideMemes(){
+      memeSticker.classList.add("hidden");
+      memeImg.src = "";
+      memeCaption.textContent = "";
+    }
+
+    function showQuestion(){
+      questionBtns.classList.remove("hidden");
+      tryAgainBtns.classList.add("hidden");
+      yesScreen.classList.add("hidden");
+
+      hideMemes();
+
+      statusText.textContent = "Waiting for husband’s decision…";
+      mainQ.textContent = "Hey chicken, will you be my Valentine?";
+      subQ.textContent = "Choose wisely. I’m emotionally attached to the correct answer. 😌";
+      stopConfetti();
+    }
+
+    function showYes(){
+      yesScreen.classList.remove("hidden");
+      questionBtns.classList.add("hidden");
+      tryAgainBtns.classList.add("hidden");
+
+      hideMemes();
+
+      statusText.textContent = "YES accepted ✅ husband approved ✅ kisses pending ✅";
+      mainQ.textContent = `Yessss, ${HUSBAND_NAME} 💙`;
+      subQ.textContent = "Come here. You’re mine. 😌";
+      floatyBurst();
+      startConfetti(2400);
+    }
+
+    // Modal
+    function openModal(title, bodyText){
+      modalTitle.textContent = title;
+      modalBody.innerHTML = bodyText;
+      modalOverlay.classList.remove("hidden");
+    }
+    function closeModal(){
+      modalOverlay.classList.add("hidden");
+      modalBody.innerHTML = "";
+    }
+
+    // Confetti
+    function resizeCanvas(){
+      confettiCanvas.width = window.innerWidth * devicePixelRatio;
+      confettiCanvas.height = window.innerHeight * devicePixelRatio;
+      confettiCanvas.style.width = window.innerWidth + "px";
+      confettiCanvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+    window.addEventListener("resize", resizeCanvas);
+
+    function startConfetti(ms){
+      resizeCanvas();
+      confettiCanvas.classList.remove("hidden");
+      confetti = Array.from({length: 170}, () => ({
+        x: Math.random()*window.innerWidth,
+        y: -20 - Math.random()*200,
+        r: 3 + Math.random()*4,
+        vx: -1 + Math.random()*2,
+        vy: 2.2 + Math.random()*3.2,
+        a: Math.random()*Math.PI*2,
+        va: -0.12 + Math.random()*0.24,
+        hue: 190 + Math.random()*45
+      }));
+      clearTimeout(confettiTimer);
+      confettiTimer = setTimeout(stopConfetti, ms);
+      requestAnimationFrame(tickConfetti);
+    }
+    function stopConfetti(){
+      confettiCanvas.classList.add("hidden");
+      confetti = [];
+    }
+    function tickConfetti(){
+      if(!confetti.length) return;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      for(const p of confetti){
+        p.x += p.vx; p.y += p.vy; p.a += p.va; p.vy += 0.01;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.a);
+        ctx.fillStyle = `hsla(${p.hue}, 85%, 60%, .9)`;
+        ctx.fillRect(-p.r,-p.r,p.r*2.2,p.r*1.6);
+        ctx.restore();
+      }
+      confetti = confetti.filter(p => p.y < window.innerHeight + 60);
+      requestAnimationFrame(tickConfetti);
+    }
+
+    // Gift actions
+    openLetterBtn.addEventListener("click", () => {
+      openModal("Words from my heart 💌", LOVE_LETTER.replace(/\n/g, "<br/>"));
+    });
+    openQuotesBtn.addEventListener("click", () => {
+      const list = ROSE_NOTES.map(x => `• ${x}`).join("<br/>");
+      openModal("Tiny Love Notes 🌹", list);
+    });
+    openQrBtn.addEventListener("click", () => {
+      const wrap = document.createElement("div");
+      wrap.innerHTML = `
+        <div style="color:rgba(11,34,64,.85); margin-bottom:10px;">
+          Scan to play: <span style="font-weight:1000;">Un Vizhigalil</span>
+        </div>
+        <div id="qr" style="background:rgba(255,255,255,.95); padding:14px; border-radius:16px; width:fit-content;"></div>
+        <div style="margin-top:12px; color:rgba(11,34,64,.65); font-size:13px;">
+          If your camera doesn’t auto-open: click “Open song”.
+        </div>
+      `;
+      openModal("QR Code 🎵", wrap.outerHTML);
+      setTimeout(() => {
+        const qrEl = document.getElementById("qr");
+        if(qrEl){
+          qrEl.innerHTML = "";
+          new QRCode(qrEl, { text: SONG_URL, width: 210, height: 210, correctLevel: QRCode.CorrectLevel.H });
+        }
+      }, 50);
+    });
+    openSongBtn.addEventListener("click", () => window.open(SONG_URL, "_blank", "noopener,noreferrer"));
+    openTicketBtn.addEventListener("click", () => {
+      const ticket = `
+<b>🎟️ OFFICIAL VALENTINE COUPON</b><br/><br/>
+<b>Redeem for:</b><br/>
+• One cozy movie night (your pick 😌)<br/>
+• Snacks + dessert (I will over-deliver.)<br/>
+• Unlimited kisses + one “hug tax” collected randomly.<br/><br/>
+<b>Fine print:</b> Valid forever. Exchangeable only for more cuddles. 💙
+      `;
+      openModal("Memory Ticket 🎟️", ticket);
+    });
+    openPlanBtn.addEventListener("click", () => {
+      const plan = `
+Pick our vibe:<br/><br/>
+<b>A:</b> Blanket fort + movie<br/>
+<b>B:</b> Dinner out<br/>
+<b>C:</b> Friends marathon + dessert<br/><br/>
+Tell me your pick and I’ll plan it. 💙
+      `;
+      openModal("Pick our date 🗓️", plan);
+    });
+
+    // Buttons
+    yesBtn.addEventListener("click", showYes);
+
+    noBtn.addEventListener("click", () => {
+      pickMeme();      // sets BOTH gif + caption together
+      showTryAgain();
+    });
+
+    tryAgainBtn.addEventListener("click", () => {
+      pickMeme();
+      statusText.textContent = "Better. Now press YES like a good husband 😌";
+    });
+
+    shuffleMemeBtn.addEventListener("click", () => pickMeme());
+
+    backBtn.addEventListener("click", showQuestion);
+    restartBtn.addEventListener("click", showQuestion);
+
+    closeModalBtn.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e) => { if(e.target === modalOverlay) closeModal(); });
+
+    // Init
+    setTodayChip();
+    showQuestion(); // IMPORTANT: starts clean with NO memes visible
+  </script>
+</body>
+</html>
